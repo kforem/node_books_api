@@ -3,6 +3,10 @@ class Programmer2 {
         this.languages = [];
     }
 
+    static makeProgrammer() {
+        return new Programmer2();
+    }
+
     learnNewLanguage(language) {
         this.languages.push(language);
     }
@@ -12,6 +16,7 @@ class Programmer2 {
     }
 }
 
+// Programmer2.makeProgrammer();
 const programmer2 = new Programmer2();
 programmer2.learnNewLanguage('Java');
 programmer2.learnNewLanguage('Ruby');

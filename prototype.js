@@ -11,6 +11,8 @@ Programmer1.prototype.isPragmatic = function() {
     return this.languages.length > 2;
 }
 
+Programmer1.makeProgrammer = function() {}
+
 const programmer1 = new Programmer1();
 programmer1.learnNewLanguage('Java');
 programmer1.learnNewLanguage('Ruby');
