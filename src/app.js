@@ -5,39 +5,46 @@ const app = express();
 
 const url = 'mongodb://localhost:27017/booksapi';
 
-MongoClient.connect(url, function(err, client) {
-    if(err) console.log(err);
-    else console.log("Connected successfully to server");
+let booksPromise = MongoClient.connect(url).then(function (client) {
+    return client.db().collection("books");
 });
 
+// application scope, request scope
 
 app.use(express.json());
 app.get("/", function (req, res, next) {
     res.send("Hello World!");
 });
-app.post("/book", function(req, res) {
+app.post("/book", function (req, res, next) {
     const {title, authors, isbn, description} = req.body;
-    MongoClient.connect(url, function(err, client) {
-        client.db().collection("books").updateOne(
-            {isbn: isbn},
-            { $set: {title, authors, isbn, description} },
-            {upsert: true}
-        );
+    booksPromise
+        .then(function (books) {
+            return books.updateOne(
+                {isbn: isbn},
+                {$set: {title, authors, isbn, description}},
+                {upsert: true}
+            );
+        })
+        .then(function () {
+            res.json({title, authors, isbn, description});
+        })
+        .catch(next);
 
-        client.close();
-    });
 
-    res.json({title, authors, isbn, description});
 });
-app.get("/book/:isbn", function (req, res) {
+app.get("/book/:isbn", function (req, res, next) {
     const isbn = req.params.isbn;
-    MongoClient.connect(url, function(err, client) {
-        client.db().collection("books").findOne({isbn}, {projection: {_id: false}}, function(err, book) {
+    booksPromise
+        .then(function (books) {
+            return books.findOne(
+                {isbn},
+                {projection: {_id: 0}}
+            );
+        })
+        .then(function (book) {
             res.json(book);
-        });
-
-        client.close();
-    });
+        })
+        .catch(next);
 });
 
 app.use(function (req, res, next) {
