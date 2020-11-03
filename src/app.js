@@ -10,18 +10,8 @@ MongoClient.connect(url, function(err, client) {
     else console.log("Connected successfully to server");
 });
 
-function log(req, res, next) {
-    console.log("new request at ", new Date());
-    next();
-}
-function auth(req, res, next) {
-    console.log("doing auth");
-    next();
-}
 
 app.use(express.json());
-app.use(log);
-app.use(auth);
 app.get("/", function (req, res, next) {
     res.send("Hello World!");
 });
