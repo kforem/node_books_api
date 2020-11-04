@@ -45,5 +45,20 @@ module.exports = ({bookService, bookRepository}) => withErrorHandling({
                 res.json(book)
             }
         });
+    },
+    async getList(req, res) {
+        const books = await bookRepository.findAll();
+
+        res.format({
+            'text/html'() {
+                res.render("books", {books, layout: "layout"});
+            },
+            'application/json'() {
+                res.json(books);
+            },
+            'default'() {
+                res.json(books)
+            }
+        });
     }
 });
