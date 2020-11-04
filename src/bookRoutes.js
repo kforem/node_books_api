@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const bookRepository = require("./bookRepository");
-const bookService = require("./bookService");
+const bookServiceFactory = require("./bookService");
+const bookService = bookServiceFactory(bookRepository);
 const bookControllerFactory = require("./bookController");
 const {createOrUpdate, details} = bookControllerFactory({bookService, bookRepository});
 const validateBook = require("./validateBookMiddleware");
