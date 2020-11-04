@@ -1,6 +1,3 @@
-// const bookRepository = require("./bookRepository");
-// const bookService = require("./bookService");
-
 // class BookController {
 //     BookController() {
 //         this.bookRepository = new BookRepository();
