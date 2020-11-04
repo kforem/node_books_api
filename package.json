@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "start": "node -r dotenv/config src/server.js",
-    "watch": "nodemon src/server.js",
-    "test:unit": "mocha test/unit",
-    "test:component": "mocha --exit test/component",
-    "test": "npm-run-all --parallel test:*"
+    "start": "ts-node src/server.js",
+    "watch": "ts-node-dev --respawn src/server.js",
+    "test": "mocha --exit -r ts-node/register test/**/*.js",
+    "copyfiles": "copyfiles src/views/*.hbs dist",
+    "prod": "tsc && npm run copyfiles && node dist/src/server.js"
   },
   "dependencies": {
     "express": "4.17.1",
@@ -14,12 +14,16 @@
     "mongodb": "3.6.2"
   },
   "devDependencies": {
+    "copyfiles": "2.4.0",
     "cross-env": "7.0.2",
     "dotenv": "8.2.0",
     "mocha": "8.2.1",
     "nodemon": "2.0.6",
     "npm-run-all": "4.1.5",
     "supertest": "6.0.0",
+    "ts-node": "9.0.0",
+    "ts-node-dev": "1.0.0",
+    "typescript": "4.0.5",
     "why-is-node-running": "2.2.0"
   }
 }
