@@ -1,14 +1,15 @@
 // duck typing
 
-const books = {};
-
-const bookRepository = {
-    async createOrUpdate(book) {
-        books[book.isbn] = book;
-    },
-    async findOne(isbn) {
-        return books[isbn];
-    }
+const bookRepositoryFactory = () => {
+    const books = {};
+    return {
+        async createOrUpdate(book) {
+            books[book.isbn] = book;
+        },
+        async findOne(isbn) {
+            return books[isbn];
+        }
+    };
 };
 
-module.exports = bookRepository;
+module.exports = bookRepositoryFactory;
