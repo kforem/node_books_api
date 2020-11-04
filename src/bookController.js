@@ -5,6 +5,7 @@
 //     }
 // }
 const mapValues = require("lodash.mapvalues");
+const {bookLink} = require("./links");
 
 // const mapValues = (api, f) => Object.fromEntries(Object.entries(api).map(([key, value]) => [key, f(value)]));
 
@@ -29,7 +30,7 @@ module.exports = ({bookService, bookRepository}) => withErrorHandling({
         // JS
         await bookService.createOrUpdate({title, authors, isbn, description});
         // HTTP
-        res.redirect(`/book/${isbn}`);
+        res.redirect(bookLink(isbn));
     },
     async details(req, res, next) {
         const isbn = req.params.isbn;
@@ -51,7 +52,7 @@ module.exports = ({bookService, bookRepository}) => withErrorHandling({
 
         res.format({
             'text/html'() {
-                res.render("books", {books, layout: "layout"});
+                res.render("books", {books: books.map(book => ({...book, url: bookLink(book.isbn)})), layout: "layout"});
             },
             'application/json'() {
                 res.json(books);
