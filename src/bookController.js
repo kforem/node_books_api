@@ -4,29 +4,36 @@
 //         this.bookService = new BookService();
 //     }
 // }
+const mapValues = require("lodash.mapvalues");
 
-module.exports = ({bookService, bookRepository}) => {
-    return {
-        async createOrUpdate(req, res, next) {
-            // HTTP
-            const {title, authors, isbn, description} = req.body;
-            try {
-                // JS
-                await bookService.createOrUpdate({title, authors, isbn, description});
-                // HTTP
-                res.redirect(`/book/${isbn}`);
-            } catch (e) {
-                next(e);
-            }
-        },
-        async details(req, res, next) {
-            try {
-                const isbn = req.params.isbn;
-                const book = await bookRepository.findOne(isbn);
-                res.json(book);
-            } catch(e) {
-                next(e);
-            }
+// const mapValues = (api, f) => Object.fromEntries(Object.entries(api).map(([key, value]) => [key, f(value)]));
+
+function withErrorHandling(api) {
+    return mapValues(api, wrapWithTryCatch);
+}
+
+function wrapWithTryCatch(fn) {
+    return async function (req, res, next) {
+        try {
+            await fn(req, res, next);
+        } catch (e) {
+            next(e);
         }
-    };
-};
+    }
+}
+
+module.exports = ({bookService, bookRepository}) => withErrorHandling({
+    async createOrUpdate(req, res, next) {
+        // HTTP
+        const {title, authors, isbn, description} = req.body;
+        // JS
+        await bookService.createOrUpdate({title, authors, isbn, description});
+        // HTTP
+        res.redirect(`/book/${isbn}`);
+    },
+    async details(req, res, next) {
+        const isbn = req.params.isbn;
+        const book = await bookRepository.findOne(isbn);
+        res.json(book);
+    }
+});
