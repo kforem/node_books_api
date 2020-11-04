@@ -8,11 +8,11 @@ const booksPromise = MongoClient.connect(url, {
 
 // DDD - aggregate
 module.exports = {
-    async createOrUpdate({title, authors, isbn, description}) {
+    async createOrUpdate(book) {
         const books = await booksPromise;
         return books.updateOne(
-            {isbn: isbn},
-            {$set : {title, authors, isbn, description} },
+            {isbn: book.isbn},
+            {$set : book },
             {upsert: true}
         );
     },
