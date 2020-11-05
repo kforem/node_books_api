@@ -1,4 +1,4 @@
-const bookServiceFactory = require("../../src/bookcatalog/bookService");
+const { bookServiceFactory } = require("../../src/bookcatalog/bookService");
 const {
   bookRepositoryFactory,
 } = require("../../src/bookcatalog/inMemoryBookRepository");

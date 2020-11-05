@@ -1,10 +1,8 @@
-const { makeSlug } = require("./makeSlug");
+import { makeSlug } from "./makeSlug";
 
-const bookService = (bookRepository) => ({
+export const bookServiceFactory = (bookRepository) => ({
   async createOrUpdate(book) {
     const slug = makeSlug(book.title);
     await bookRepository.createOrUpdate({ ...book, slug });
   },
 });
-
-module.exports = bookService;

@@ -3,7 +3,7 @@ module.exports = (db) => {
   const router = require("express").Router();
   const { bookRepositoryFactory } = require("./bookRepository");
   const bookRepository = bookRepositoryFactory(db);
-  const bookServiceFactory = require("./bookService");
+  const { bookServiceFactory } = require("./bookService");
   const bookService = bookServiceFactory(bookRepository);
   const bookControllerFactory = require("./bookController");
   const { createOrUpdate, details, getList } = bookControllerFactory({
