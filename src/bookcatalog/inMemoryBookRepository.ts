@@ -1,9 +1,6 @@
-// duck typing
-
 export const bookRepositoryFactory = () => {
   const books = {};
   return {
-    // local reasoning
     async createOrUpdate(book) {
       books[book.isbn] = book;
     },
