@@ -1,6 +1,6 @@
 // duck typing
 
-const bookRepositoryFactory = () => {
+export const bookRepositoryFactory = () => {
   const books = {};
   return {
     // local reasoning
@@ -12,5 +12,3 @@ const bookRepositoryFactory = () => {
     },
   };
 };
-
-module.exports = bookRepositoryFactory;
