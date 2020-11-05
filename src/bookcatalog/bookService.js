@@ -1,4 +1,4 @@
-const makeSlug = require("./makeSlug");
+const { makeSlug } = require("./makeSlug");
 
 const bookService = (bookRepository) => ({
   async createOrUpdate(book) {
