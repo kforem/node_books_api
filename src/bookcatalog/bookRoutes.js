@@ -1,6 +1,5 @@
 module.exports = (db) => {
-  const { resources } = require("./links");
-  const { BOOK, BOOK_COLLECTION } = resources;
+  const { BOOK, BOOK_COLLECTION } = require("./links").resources;
   const router = require("express").Router();
   const bookRepositoryFactory = require("./bookRepository");
   const bookRepository = bookRepositoryFactory(db);

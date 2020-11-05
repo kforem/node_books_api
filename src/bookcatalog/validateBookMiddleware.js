@@ -1,4 +1,4 @@
-const validateBook = require("./validateBook");
+const { validateBook } = require("./validateBook");
 
 module.exports = function validate(req, res, next) {
   const validateErrors = validateBook(req.body);

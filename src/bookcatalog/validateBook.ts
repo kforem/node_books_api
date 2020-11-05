@@ -1,4 +1,4 @@
-const Joi = require("joi");
+import Joi from "joi";
 
 const authorSchema = Joi.string().required().min(1).max(50);
 
@@ -9,7 +9,7 @@ const schema = Joi.object({
   isbn: Joi.string().required().uppercase().length(10),
 });
 
-function validateBook(book) {
+export function validateBook(book) {
   const result = schema.validate(book, {
     allowUnknown: false,
     convert: true,
@@ -18,5 +18,3 @@ function validateBook(book) {
   return result.error ? result.error.details : null;
   // return result.error ? Maybe.Just(result.error.details) : Maybe.None();
 }
-
-module.exports = validateBook;
