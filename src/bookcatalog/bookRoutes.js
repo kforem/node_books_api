@@ -1,7 +1,7 @@
 module.exports = (db) => {
   const { BOOK, BOOK_COLLECTION } = require("./links").resources;
   const router = require("express").Router();
-  const bookRepositoryFactory = require("./bookRepository");
+  const { bookRepositoryFactory } = require("./bookRepository");
   const bookRepository = bookRepositoryFactory(db);
   const bookServiceFactory = require("./bookService");
   const bookService = bookServiceFactory(bookRepository);

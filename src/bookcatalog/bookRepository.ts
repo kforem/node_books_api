@@ -1,4 +1,4 @@
-module.exports = (db) => {
+export const bookRepositoryFactory = (db) => {
   const books = db.collection("books");
   return {
     async createOrUpdate(book) {
