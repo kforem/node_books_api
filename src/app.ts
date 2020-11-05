@@ -1,10 +1,11 @@
 import express from "express";
+import { Db } from "mongodb";
 
 import { bookRoutesFactory } from "./bookcatalog/bookRoutes";
 
 import { errorHandler, notFound } from "./error";
 
-export const appFactory = (db) => {
+export const appFactory = (db: Db) => {
   const app = express();
 
   const bookRoutes = bookRoutesFactory(db);

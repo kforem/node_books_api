@@ -1,5 +1,6 @@
 import { connection } from "./connection";
 import { appFactory } from "./app";
+import { Db } from "mongodb";
 
 (async () => {
   const app = appFactory(await connection);

@@ -1,4 +1,14 @@
-export const bookRepositoryFactory = (db) => {
+import { Db } from "mongodb";
+import { Book } from "./book";
+
+// interface BookRepository {}
+export type BookRepository = {
+  createOrUpdate(book: Book): Promise<any>;
+  findOne(isbn: string): Promise<Book | null>;
+  findAll(): Promise<Book[]>;
+};
+
+export const bookRepositoryFactory = (db: Db): BookRepository => {
   const books = db.collection("books");
   return {
     async createOrUpdate(book) {
