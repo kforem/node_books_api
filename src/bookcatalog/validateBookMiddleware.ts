@@ -1,6 +1,7 @@
 import { validateBook } from "./validateBook";
+import { Request, Response, NextFunction } from "express";
 
-export function validate(req, res, next) {
+export function validate(req: Request, res: Response, next: NextFunction) {
   const validateErrors = validateBook(req.body);
 
   if (validateErrors) {
