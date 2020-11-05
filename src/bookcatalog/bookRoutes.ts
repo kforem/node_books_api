@@ -5,7 +5,7 @@ import { Router } from "express";
 import { bookControllerFactory } from "./bookController";
 import { validate } from "./validateBookMiddleware";
 
-module.exports = (db) => {
+export const bookRoutesFactory = (db) => {
   const { BOOK, BOOK_COLLECTION } = resources;
   const router = Router();
   const bookRepository = bookRepositoryFactory(db);
