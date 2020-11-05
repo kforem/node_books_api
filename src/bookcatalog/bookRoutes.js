@@ -10,9 +10,9 @@ module.exports = (db) => {
     bookService,
     bookRepository,
   });
-  const validateBook = require("./validateBookMiddleware");
+  const { validate } = require("./validateBookMiddleware");
 
-  router.post(BOOK_COLLECTION, validateBook, createOrUpdate);
+  router.post(BOOK_COLLECTION, validate, createOrUpdate);
   router.get(BOOK_COLLECTION, getList);
   router.get(BOOK, details);
 

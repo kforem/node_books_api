@@ -1,6 +1,6 @@
 import { validateBook } from "./validateBook";
 
-module.exports = function validate(req, res, next) {
+export function validate(req, res, next) {
   const validateErrors = validateBook(req.body);
 
   if (validateErrors) {
@@ -13,4 +13,4 @@ module.exports = function validate(req, res, next) {
   } else {
     next();
   }
-};
+}
