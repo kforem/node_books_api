@@ -1,6 +1,7 @@
 import { bookServiceFactory } from "../../src/bookcatalog/bookService";
 import { bookRepositoryFactory } from "../../src/bookcatalog/inMemoryBookRepository";
 import assert from "assert";
+import { BookInput } from "../../src/bookcatalog/book";
 
 describe("Book service", function () {
   it("can create a book", async function () {
@@ -9,7 +10,10 @@ describe("Book service", function () {
     const bookService = bookServiceFactory(bookRepository);
 
     // when
-    await bookService.createOrUpdate({ title: "some title", isbn: "ISBN" });
+    await bookService.createOrUpdate({
+      title: "some title",
+      isbn: "ISBN",
+    } as BookInput);
 
     // then
     const book = await bookRepository.findOne("ISBN");
