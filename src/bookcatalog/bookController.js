@@ -5,61 +5,65 @@
 //     }
 // }
 const mapValues = require("lodash.mapvalues");
-const {bookLink} = require("./links");
+const { bookLink } = require("./links");
 
 // const mapValues = (api, f) => Object.fromEntries(Object.entries(api).map(([key, value]) => [key, f(value)]));
 
 function withErrorHandling(api) {
-    return mapValues(api, wrapWithTryCatch);
+  return mapValues(api, wrapWithTryCatch);
 }
 
 function wrapWithTryCatch(fn) {
-    return async function (req, res, next) {
-        try {
-            await fn(req, res, next);
-        } catch (e) {
-            next(e);
-        }
+  return async function (req, res, next) {
+    try {
+      await fn(req, res, next);
+    } catch (e) {
+      next(e);
     }
+  };
 }
 
-module.exports = ({bookService, bookRepository}) => withErrorHandling({
+module.exports = ({ bookService, bookRepository }) =>
+  withErrorHandling({
     async createOrUpdate(req, res, next) {
-        // HTTP
-        const {title, authors, isbn, description} = req.body;
-        // JS
-        await bookService.createOrUpdate({title, authors, isbn, description});
-        // HTTP
-        res.redirect(bookLink(isbn));
+      // HTTP
+      const { title, authors, isbn, description } = req.body;
+      // JS
+      await bookService.createOrUpdate({ title, authors, isbn, description });
+      // HTTP
+      res.redirect(bookLink(isbn));
     },
     async details(req, res, next) {
-        const isbn = req.params.isbn;
-        const book = await bookRepository.findOne(isbn);
-        res.format({
-            'text/html'() {
-                res.render("book", {book, layout: "layout"});
-            },
-            'application/json'() {
-                res.json(book);
-            },
-            'default'() {
-                res.json(book)
-            }
-        });
+      const isbn = req.params.isbn;
+      const book = await bookRepository.findOne(isbn);
+      res.format({
+        "text/html"() {
+          res.render("book", { book, layout: "layout" });
+        },
+        "application/json"() {
+          res.json(book);
+        },
+        default() {
+          res.json(book);
+        },
+      });
     },
     async getList(req, res) {
-        const books = await bookRepository.findAll();
+      const books = await bookRepository.findAll();
 
-        res.format({
-            'text/html'() {
-                res.render("books", {books: books.map(book => ({...book, url: bookLink(book.isbn)})), layout: "layout"});
-            },
-            'application/json'() {
-                res.json(books);
-            },
-            'default'() {
-                res.json(books)
-            }
-        });
-    }
-});
+      res.format({
+        "text/html"() {
+          res.render("books", {
+            books: books.map((book) => ({ ...book, url: bookLink(book.isbn) })),
+            layout: "layout",
+          });
+        },
+        "application/json"() {
+          res.json(books);
+        },
+        default() {
+          res.json(books);
+        },
+      });
+    },
+  });

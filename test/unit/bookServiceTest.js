@@ -2,18 +2,21 @@ const bookServiceFactory = require("../../src/bookcatalog/bookService");
 const bookRepositoryFactory = require("../../src/bookcatalog/inMemoryBookRepository");
 const assert = require("assert");
 
-describe('Book service', function () {
-    it('can create a book', async function () {
-        // given
-        const bookRepository = bookRepositoryFactory();
-        const bookService = bookServiceFactory(bookRepository);
+describe("Book service", function () {
+  it("can create a book", async function () {
+    // given
+    const bookRepository = bookRepositoryFactory();
+    const bookService = bookServiceFactory(bookRepository);
 
-        // when
-        await bookService.createOrUpdate({title: "some title", isbn: "ISBN"});
+    // when
+    await bookService.createOrUpdate({ title: "some title", isbn: "ISBN" });
 
-        // then
-        const book = await bookRepository.findOne("ISBN")
-        assert.deepStrictEqual(book, {title: "some title", slug: "some-title", isbn: "ISBN"});
+    // then
+    const book = await bookRepository.findOne("ISBN");
+    assert.deepStrictEqual(book, {
+      title: "some title",
+      slug: "some-title",
+      isbn: "ISBN",
     });
-
+  });
 });

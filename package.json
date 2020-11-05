@@ -4,7 +4,8 @@
     "watch": "ts-node-dev --respawn src/server.js",
     "test": "mocha --exit -r ts-node/register test/**/*.js",
     "copyfiles": "copyfiles src/views/*.hbs dist",
-    "prod": "tsc && npm run copyfiles && node dist/src/server.js"
+    "prod": "tsc && npm run copyfiles && node dist/src/server.js",
+    "format": "prettier '**/*.js' --write"
   },
   "dependencies": {
     "express": "4.17.1",
@@ -20,6 +21,7 @@
     "mocha": "8.2.1",
     "nodemon": "2.0.6",
     "npm-run-all": "4.1.5",
+    "prettier": "2.1.2",
     "supertest": "6.0.0",
     "ts-node": "9.0.0",
     "ts-node-dev": "1.0.0",
