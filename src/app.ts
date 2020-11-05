@@ -1,9 +1,14 @@
-module.exports = (db) => {
-  const express = require("express");
+import express from "express";
+
+import { bookRoutesFactory } from "./bookcatalog/bookRoutes";
+
+import { errorHandler, notFound } from "./error";
+
+export const appFactory = (db) => {
   const app = express();
-  const { bookRoutesFactory } = require("./bookcatalog/bookRoutes");
+
   const bookRoutes = bookRoutesFactory(db);
-  const { notFound, errorHandler } = require("./error");
+
   const path = require("path");
 
   app.set("views", path.join(__dirname, "views"));

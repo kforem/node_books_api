@@ -1,11 +1,12 @@
 const httpClient = require("supertest");
-const app = require("../../src/app");
+const { appFactory } = require("../../src/app");
 const { connection } = require("../../src/connection");
 const assert = require("assert");
 
 describe("Book inventory", function () {
   it("allows to stock up the items", async function () {
-    const request = httpClient(app(await connection));
+    const app = appFactory(await connection);
+    const request = httpClient(app);
 
     // CREATE
     const createResult = await request
