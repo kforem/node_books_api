@@ -1,4 +1,4 @@
-export function makeSlug(text) {
+export function makeSlug(text: string): string {
   return text
     .toString()
     .toLowerCase()
