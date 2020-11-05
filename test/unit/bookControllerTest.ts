@@ -1,5 +1,9 @@
 import assert from "assert";
 import { bookControllerFactory } from "../../src/bookcatalog/bookController";
+import { Request, Response, NextFunction } from "express";
+import { BookRepository } from "../../src/bookcatalog/bookRepository";
+
+type MockFn<T> = ((arg: T) => any) & { invokedWith?: T };
 
 describe("Book controller", function () {
   it("create or update happy path", async function () {
@@ -12,21 +16,27 @@ describe("Book controller", function () {
         isbn: "ISBN",
       },
     };
-    const res = {
+    type MockResponse = {
+      redirect: MockFn<string>;
+    };
+    const res: MockResponse = {
       redirect(path) {
-        // @ts-ignore
         res.redirect.invokedWith = path;
       },
     };
-    // @ts-ignore
-    const bookController = bookControllerFactory({ bookService });
+    const bookController = bookControllerFactory({
+      bookService,
+      bookRepository: {} as BookRepository,
+    });
 
     // when
-    // @ts-ignore
-    await bookController.createOrUpdate(req, res);
+    await bookController.createOrUpdate(
+      req as Request,
+      res as Response,
+      {} as NextFunction
+    );
 
     // then
-    // @ts-ignore
     assert.deepStrictEqual(res.redirect.invokedWith, "/book/ISBN");
   });
 
@@ -38,18 +48,22 @@ describe("Book controller", function () {
         throw new Error("sth bad happened");
       },
     };
-    function next(error) {
-      // @ts-ignore
+    const next: MockFn<Error> = (error) => {
       next.invokedWith = error;
-    }
-    // @ts-ignore
-    const bookController = bookControllerFactory({ bookService });
+    };
+    const bookController = bookControllerFactory({
+      bookService,
+      bookRepository: {} as BookRepository,
+    });
 
     // when
-    await bookController.createOrUpdate(req, null, next);
+    await bookController.createOrUpdate(
+      req as Request,
+      {} as Response,
+      next as NextFunction
+    );
 
     // then
-    // @ts-ignore
     assert.deepStrictEqual(next.invokedWith, new Error("sth bad happened"));
   });
 });
