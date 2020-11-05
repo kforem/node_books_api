@@ -5,7 +5,7 @@ module.exports = (db) => {
   const bookRepository = bookRepositoryFactory(db);
   const { bookServiceFactory } = require("./bookService");
   const bookService = bookServiceFactory(bookRepository);
-  const bookControllerFactory = require("./bookController");
+  const { bookControllerFactory } = require("./bookController");
   const { createOrUpdate, details, getList } = bookControllerFactory({
     bookService,
     bookRepository,

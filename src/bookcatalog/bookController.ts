@@ -4,8 +4,8 @@
 //         this.bookService = new BookService();
 //     }
 // }
-const mapValues = require("lodash.mapvalues");
-const { bookLink } = require("./links");
+import mapValues from "lodash.mapvalues";
+import { bookLink } from "./links";
 
 // const mapValues = (api, f) => Object.fromEntries(Object.entries(api).map(([key, value]) => [key, f(value)]));
 
@@ -23,7 +23,7 @@ function wrapWithTryCatch(fn) {
   };
 }
 
-module.exports = ({ bookService, bookRepository }) =>
+export const bookControllerFactory = ({ bookService, bookRepository }) =>
   withErrorHandling({
     async createOrUpdate(req, res, next) {
       // HTTP
