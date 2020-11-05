@@ -1,11 +1,13 @@
-const { validateBook } = require("./validateBook");
+import { validateBook } from "./validateBook";
 
 module.exports = function validate(req, res, next) {
   const validateErrors = validateBook(req.body);
 
   if (validateErrors) {
     const error = new Error();
+    // @ts-ignore
     error.message = validateErrors;
+    // @ts-ignore
     error.status = 400;
     next(error);
   } else {
