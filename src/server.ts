@@ -1,6 +1,7 @@
+import { connection } from "./connection";
+import { appFactory } from "./app";
+
 (async () => {
-  const { connection } = require("./connection");
-  const { appFactory } = require("./app");
   const app = appFactory(await connection);
 
   app.listen(3000, function () {
