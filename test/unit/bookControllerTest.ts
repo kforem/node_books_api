@@ -1,7 +1,5 @@
-const assert = require("assert");
-const {
-  bookControllerFactory,
-} = require("../../src/bookcatalog/bookController");
+import assert from "assert";
+import { bookControllerFactory } from "../../src/bookcatalog/bookController";
 
 describe("Book controller", function () {
   it("create or update happy path", async function () {
@@ -16,15 +14,19 @@ describe("Book controller", function () {
     };
     const res = {
       redirect(path) {
+        // @ts-ignore
         res.redirect.invokedWith = path;
       },
     };
+    // @ts-ignore
     const bookController = bookControllerFactory({ bookService });
 
     // when
+    // @ts-ignore
     await bookController.createOrUpdate(req, res);
 
     // then
+    // @ts-ignore
     assert.deepStrictEqual(res.redirect.invokedWith, "/book/ISBN");
   });
 
@@ -37,14 +39,17 @@ describe("Book controller", function () {
       },
     };
     function next(error) {
+      // @ts-ignore
       next.invokedWith = error;
     }
+    // @ts-ignore
     const bookController = bookControllerFactory({ bookService });
 
     // when
     await bookController.createOrUpdate(req, null, next);
 
     // then
+    // @ts-ignore
     assert.deepStrictEqual(next.invokedWith, new Error("sth bad happened"));
   });
 });
