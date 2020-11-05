@@ -1,8 +1,6 @@
-const { bookServiceFactory } = require("../../src/bookcatalog/bookService");
-const {
-  bookRepositoryFactory,
-} = require("../../src/bookcatalog/inMemoryBookRepository");
-const assert = require("assert");
+import { bookServiceFactory } from "../../src/bookcatalog/bookService";
+import { bookRepositoryFactory } from "../../src/bookcatalog/inMemoryBookRepository";
+import assert from "assert";
 
 describe("Book service", function () {
   it("can create a book", async function () {

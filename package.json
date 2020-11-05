@@ -2,7 +2,7 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "watch": "ts-node-dev --respawn src/server.ts",
-    "test": "mocha --exit -r ts-node/register test/**/*.js",
+    "test": "mocha --exit -r ts-node/register test/**/*.{ts,js}",
     "copyfiles": "copyfiles src/views/*.hbs dist",
     "prod": "tsc && npm run copyfiles && node dist/src/server.js",
     "format": "prettier '**/*.js' --write"

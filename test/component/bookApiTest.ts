@@ -1,7 +1,7 @@
-const httpClient = require("supertest");
-const { appFactory } = require("../../src/app");
-const { connection } = require("../../src/connection");
-const assert = require("assert");
+import httpClient from "supertest";
+import { appFactory } from "../../src/app";
+import { connection } from "../../src/connection";
+import assert from "assert";
 
 describe("Book inventory", function () {
   it("allows to stock up the items", async function () {
@@ -26,7 +26,7 @@ describe("Book inventory", function () {
       .set("Accept", "application/json")
       .expect(200);
 
-    assert.deepEqual(readResult.body, {
+    assert.deepStrictEqual(readResult.body, {
       title: "JavaScript in Action",
       slug: "javascript-in-action",
       authors: ["James Smith", "Kate Donovan"],
